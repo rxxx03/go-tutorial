@@ -26,7 +26,7 @@ func getAlbums(c *gin.Context) {
 
 func getAlbum(c *gin.Context) {
 	id, err := uuid.Parse(c.Param("id"))
-	if (err != nil) {
+	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"message": "invalid UUID"})
 		return
 	}
@@ -40,10 +40,22 @@ func getAlbum(c *gin.Context) {
 	c.JSON(http.StatusNotFound, gin.H{"message": "album not found"})
 }
 
+func postAlbum(c *gin.Context) {
+	var newAlbum album
+
+	if err := c.BindJSON(&newAlbum); err != nil {
+		return
+	}
+
+	albums = append(albums, newAlbum)
+	c.IndentedJSON(http.StatusCreated, newAlbum.ID)
+}
+
 func main() {
 	router := gin.Default()
 	router.GET("/albums", getAlbums)
 	router.GET("/albums/:id", getAlbum)
+	router.POST("/albums", postAlbum)
 
 	router.Run("localhost:8080")
 }
