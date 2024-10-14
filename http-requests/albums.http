@@ -1,0 +1,17 @@
+GET http://localhost:8080/albums
+
+###
+
+GET http://localhost:8080/albums/59c8b985-655d-408e-93d9-3ec46324fb6e
+
+###
+
+POST http://localhost:8080/albums
+Content-Type: application/json
+
+{
+  "id": "64b53f2c-dc1d-4a31-8bc9-8f25f534a2a6",
+  "artist": "Taylor Swift",
+  "title": "Red",
+  "price": 12.99
+}
